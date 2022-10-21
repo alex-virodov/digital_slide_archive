@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
+
+rm -rf openslide
+cp -r ../openslide .
 
 docker pull quay.io/pypa/manylinux2014_x86_64:latest
 # Use the author date (not the commit date) for SOURCE_DATE_EPOCH.  This
@@ -8,7 +12,7 @@ docker pull quay.io/pypa/manylinux2014_x86_64:latest
 # epoch used in the build.
 docker build --force-rm -t girder/large_image_wheels --build-arg SOURCE_DATE_EPOCH=$(git log -1 --pretty="format:%at" Dockerfile) --build-arg PYPY=false .
 # docker build --force-rm -t girder/large_image_wheels --build-arg SOURCE_DATE_EPOCH=$(git log -1 --pretty="format:%at" Dockerfile) .
-mkdir -p wheels
+mkdir -p wheels wheelhouse gh-pages
 ls -al wheels
 rm -f wheels/*many*.whl
 docker run -v `pwd`/wheels:/opt/mount --rm --entrypoint bash girder/large_image_wheels -c 'cp --preserve=timestamps /io/wheelhouse/{pylibtiff,Glymur,pyproj,GDAL,mapnik,openslide_python,pyvips,pylibmc,python_javabridge}*-cp*many* /opt/mount/. && chown '`id -u`':'`id -g`' /opt/mount/*.whl'

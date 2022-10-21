@@ -1977,17 +1977,18 @@ open(path, "w").write(s)' && \
     rm -rf ~/.cache && \
     echo "`date` python-mapnik" >> /build/log.txt
 
+COPY openslide openslide
 RUN \
     echo "`date` openslide" >> /build/log.txt && \
     export JOBS=`nproc` && \
     export AUTOMAKE_JOBS=`nproc` && \
-    curl --retry 5 --silent https://github.com/openslide/openslide/archive/v`getver.py openslide`.tar.gz -L -o openslide.tar.gz && \
-    mkdir openslide && \
-    tar -zxf openslide.tar.gz -C openslide --strip-components 1 && \
-    rm -f openslide.tar.gz && \
+    # curl --retry 5 --silent https://github.com/openslide/openslide/archive/v`getver.py openslide`.tar.gz -L -o openslide.tar.gz && \
+    # mkdir openslide && \
+    # tar -zxf openslide.tar.gz -C openslide --strip-components 1 && \
+    # rm -f openslide.tar.gz && \
     cd openslide && \
-    patch src/openslide-vendor-mirax.c ../openslide-vendor-mirax.c.patch && \
-    patch src/openslide.c ../openslide-init.patch && \
+    # patch src/openslide-vendor-mirax.c ../openslide-vendor-mirax.c.patch && \
+    # patch src/openslide.c ../openslide-init.patch && \
     export LDFLAGS="$LDFLAGS"',-rpath,$ORIGIN' && \
     autoreconf -ifv && \
     ./configure --prefix=/usr/local --disable-static && \
