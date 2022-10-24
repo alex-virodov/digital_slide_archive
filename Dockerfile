@@ -79,10 +79,18 @@ RUN cd /opt && \
     cd /opt/slicer_cli_web && \
     pip install --no-cache-dir -e .
 
+#RUN cd /opt && \
+#    git clone https://github.com/girder/large_image && \
+#    cd /opt/large_image && \
+#    pip install --no-cache-dir --find-links https://girder.github.io/large_image_wheels -e .[memcached] -rrequirements-dev.txt
+COPY large_image_wheels/wheels /opt/large_image_wheels
 RUN cd /opt && \
     git clone https://github.com/girder/large_image && \
     cd /opt/large_image && \
-    pip install --no-cache-dir --find-links https://girder.github.io/large_image_wheels -e .[memcached] -rrequirements-dev.txt
+    pip install --no-cache-dir --find-links /opt/large_image_wheels -e .[memcached] -rrequirements-dev.txt && \
+    rm -rf /opt/large_image_wheels
+# Patch the large_image openslide source to handle isyntax extension.
+RUN sed -i "/extensions = /a \        'isyntax': SourcePriority.HIGH, " /opt/large_image/sources/openslide/large_image_source_openslide/__init__.py
 
 RUN cd /opt && \
     git clone https://github.com/DigitalSlideArchive/HistomicsUI && \

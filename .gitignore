@@ -6,6 +6,7 @@ _build*
 .eggs
 .tox
 .vagrant
+venv/
 ansible/roles/girder.girder
 ansible/roles/girder.mongodb
 ansible/sample*.cfg
