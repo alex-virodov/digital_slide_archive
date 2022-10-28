@@ -103,6 +103,7 @@ RUN pip install --no-cache-dir --pre \
     girder-dicom-viewer \
     girder-homepage \
     girder-ldap \
+    girder-oauth \
     girder-resource-path-tools \
     girder-virtual-folders \
     girder-xtk-demo
