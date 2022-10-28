@@ -89,6 +89,7 @@ services:
       - memcached
       - rabbitmq
     command: /opt/digital_slide_archive/devops/dsa/start_girder.sh
+    # command: tail -f /dev/null
   mongodb:
     image: "mongo:latest"
     # Set DSA_USER to your user id (e.g., `DSA_USER=$(id -u):$(id -g)`)

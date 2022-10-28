@@ -107,6 +107,8 @@ RUN pip install --no-cache-dir --pre \
     girder-resource-path-tools \
     girder-virtual-folders \
     girder-xtk-demo
+# Patch oauth to use lowercase email in search
+RUN sed -i -e "s/user = User().findOne({'email': email})/user = User().findOne({'email': email.lower()})/" /opt/venv/lib/python3.9/site-packages/girder_oauth/providers/base.py
 
 # Build the girder web client
 RUN NPM_CONFIG_FUND=false NPM_CONFIG_AUDIT=false NPM_CONFIG_AUDIT_LEVEL=high NPM_CONFIG_LOGLEVEL=warn NPM_CONFIG_PROGRESS=false NPM_CONFIG_PREFER_OFFLINE=true \
