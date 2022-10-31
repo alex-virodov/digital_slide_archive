@@ -126,7 +126,9 @@ RUN npm install -g phantomjs-prebuilt --unsafe-perm && \
 RUN echo 'task_reject_on_worker_lost = True' >> /opt/girder_worker/girder_worker/celeryconfig.py
 RUN echo 'task_acks_late = True' >> /opt/girder_worker/girder_worker/celeryconfig.py
 
-COPY . /opt/digital_slide_archive
+RUN mkdir /opt/digital_slide_archive
+COPY ansible /opt/digital_slide_archive/ansible
+COPY devops  /opt/digital_slide_archive/devops
 
 ENV PATH="/opt/digital_slide_archive/devops/dsa/utils:$PATH"
 
