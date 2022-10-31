@@ -1,13 +1,18 @@
-Digital Slide Archive + OpenSlide with iSyntax support
-======================================================
+Running Digital Slide Archive + OpenSlide with iSyntax support
+==============================================================
+1. Login to docker github: ``docker login ghcr.io -u <YOUR-USERNAME>``. See `Github doc <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry>` for reference.
+2.  Run DSA as usual, ``cd devops/dsa && DSA_USER=$(id -u):$(id -g) docker-compose up``. It will pull the prebuilt image.
+
+Building Digital Slide Archive + OpenSlide with iSyntax support
+===============================================================
 1. You must be in linux shell/wsl2 shell. Checking out with git on windows will introduce windows endlines (^M) and will break scripts & patches.
 2. ``python -m venv venv && source ./venv/bin/activate && pip install packaging requests``
 3. ``git submodule update --init`` - to get openslide with isyntax-support.
 4. ``cd large_image_wheels/ && ./rebuild.sh`` - this will take a long while (1 hour on a good machine, more on a weaker one).
    For repeated builds, can use ``./build.sh``, but need to run ``./rebuild.sh`` at least once to get package version checking.
    (Note: most of the built wheels will be unused, but I was not brave enough to untangle those dependencies and remove unneeded stuff.)
-5. Run DSA as usual, ``cd devops/dsa && DSA_USER=$(id -u):$(id -g) docker-compose up``. Confirm the build process picks up the built large_image_wheels and not using a cached version. If cache is suspected, try ``docker builder purge -a``.
-
+5. Build the dsa container: ``docker build -t ghcr.io/innovationcore/dsa_common_isyntax .`` in root directory.
+6. Run DSA as usual, ``cd devops/dsa && DSA_USER=$(id -u):$(id -g) docker-compose up``.
  
 
 

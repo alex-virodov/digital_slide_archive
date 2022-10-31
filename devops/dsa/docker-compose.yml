@@ -2,8 +2,8 @@
 version: '3'
 services:
   girder:
-    image: dsarchive/dsa_common
-    build: ../..
+    image: ghcr.io/innovationcore/dsa_common_isyntax
+    # build: ../..
     # Instead of privileged mode, fuse can use:
     # devices:
     #   - /dev/fuse:/dev/fuse
@@ -138,8 +138,8 @@ services:
         max-size: "10M"
         max-file: "5"
   worker:
-    image: dsarchive/dsa_common
-    build: ../..
+    image: ghcr.io/innovationcore/dsa_common_isyntax
+    # build: ../..
     # Set DSA_USER to a user id that is part of the docker group (e.g.,
     # `DSA_USER=$(id -u):$(id -g)`).  This provides permissions to manage
     # docker
