@@ -1,6 +1,6 @@
 Running Digital Slide Archive + OpenSlide with iSyntax support
 ==============================================================
-1. Login to docker github: ``docker login ghcr.io -u <YOUR-USERNAME>``. See `Github doc <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry>` for reference.
+1. Login to docker github: ``docker login ghcr.io -u <YOUR-USERNAME>``. See `Github docs <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry>`_ for reference.
 2.  Run DSA as usual, ``cd devops/dsa && DSA_USER=$(id -u):$(id -g) docker-compose up``. It will pull the prebuilt image.
 
 Building Digital Slide Archive + OpenSlide with iSyntax support
