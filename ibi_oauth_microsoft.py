@@ -3,6 +3,7 @@ import warnings
 
 from msal import ConfidentialClientApplication
 
+from girder.api.rest import getApiUrl
 from girder.exceptions import RestException
 from girder.models.setting import Setting
 
@@ -35,6 +36,9 @@ class Microsoft(ProviderBase):
         if not clientSecret:
             raise Exception('No Microsoft client secret setting is present.')
 
+        callbackUrl = '/'.join((getApiUrl(), 'oauth', 'microsoft', 'callback'))
+        print(f'################### {callbackUrl=}')
+
         app = ConfidentialClientApplication(
             client_id=clientId,
             client_credential=clientSecret,
@@ -42,23 +46,30 @@ class Microsoft(ProviderBase):
         )
         # The default response type is 'code', so we don't need to pass it
         url = app.get_authorization_request_url(
+            redirect_uri=callbackUrl,
             scopes=cls._AUTH_SCOPES,
             state=state,
         )
         return url
 
     def getToken(self, code):
+        print(f'################### {self.redirectUri=}')
         app = ConfidentialClientApplication(
             client_id=self.clientId,
             client_credential=self.clientSecret,
             authority=self._authority(),
         )
+        callbackUrl = '/'.join((getApiUrl(), 'oauth', 'microsoft', 'callback'))
+        print(f'################### {callbackUrl=}')
+
         with warnings.catch_warnings():
             warnings.simplefilter('ignore', DeprecationWarning)
             result = app.acquire_token_by_authorization_code(
                 code,
                 self._AUTH_SCOPES,
+                redirect_uri=callbackUrl
             )
+            print(f'################## {result=}')
         if 'access_token' not in result:
             strings = result['error'], result['error_description']
             raise Exception('Error "%s" acquiring access token for client: %s' % strings)
@@ -72,6 +83,7 @@ class Microsoft(ProviderBase):
 
         # Get user's OAuth2 ID, email, and name
         resp = self._getJson(method='GET', url=self._API_USER_URL, headers=headers)
+        print(f'################## {resp=}')
 
         oauthId = resp.get('id')
         if not oauthId:

@@ -18,7 +18,7 @@ var OAuthLoginView = View.extend({
     },
 
     initialize: function (settings) {
-        var redirect = settings.redirect || splitRoute(window.location.href).base;
+        var redirect = settings.redirect || window.location.href;
         this.modeText = settings.modeText || 'log in';
         this.providers = null;
         this.enablePasswordLogin = _.has(settings, 'enablePasswordLogin') ? settings.enablePasswordLogin : true;
