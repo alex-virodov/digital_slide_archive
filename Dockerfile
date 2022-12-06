@@ -113,6 +113,7 @@ RUN sed -i -e "s/user = User().findOne({'email': email})/user = User().findOne({
 COPY ibi_oauth_microsoft.py /opt/venv/lib/python3.9/site-packages/girder_oauth/providers/microsoft.py
 # Patch oauth to preserve url on login - allows us to use slide urls from outside DSA.
 COPY ibi_OAuthLoginView.js  /opt/venv/lib/python3.9/site-packages/girder_oauth/web_client/views/OAuthLoginView.js
+COPY ibi_metadatumView.pug /opt/girder/girder/web_client/src/templates/widgets/metadatumView.pug
 
 # Build the girder web client
 RUN NPM_CONFIG_FUND=false NPM_CONFIG_AUDIT=false NPM_CONFIG_AUDIT_LEVEL=high NPM_CONFIG_LOGLEVEL=warn NPM_CONFIG_PROGRESS=false NPM_CONFIG_PREFER_OFFLINE=true \
