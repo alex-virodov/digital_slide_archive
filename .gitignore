@@ -12,3 +12,4 @@ ansible/roles/girder.mongodb
 ansible/sample*.cfg
 docker-compose.local.yml
 worker.local.cfg
+/case_data_identified
