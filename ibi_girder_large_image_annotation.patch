@@ -1,0 +1,16 @@
+--- ./large_image/girder_annotation/girder_large_image_annotation/rest/annotation.base  2023-06-09 13:27:02.885795028 +0000
++++ ./large_image/girder_annotation/girder_large_image_annotation/rest/annotation.py    2023-06-09 13:28:06.383311045 +0000
+@@ -333,8 +333,9 @@
+         user = self.getCurrentUser()
+         item = Item().load(annotation.get('itemId'), force=True)
+         if item is not None:
+-            Item().requireAccess(
+-                item, user=user, level=AccessType.WRITE)
++            if not Item().hasAccessFlags(item, user, constants.ANNOTATION_ACCESS_FLAG):
++                Item().requireAccess(
++                    item, user=user, level=AccessType.WRITE)
+         # If we have a content length, then we have replacement JSON.  If
+         # elements are not included, don't replace them
+         returnElements = True
+		 
+		 
