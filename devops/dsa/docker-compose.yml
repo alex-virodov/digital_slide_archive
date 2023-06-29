@@ -83,7 +83,7 @@ services:
 
       # Add additional mounts here to get access to existing files on your
       # system.  Also add them to the worker container to reduce copying.
-      - /mounted_assetstore:/mounted_assetstore
+      - /iso2smb-deident/:/mounted_assetstore
     depends_on:
       - mongodb
       - memcached
