@@ -2,7 +2,7 @@
 version: '3'
 services:
   girder:
-    image: ghcr.io/innovationcore/dsa_common_isyntax
+    image: ghcr.io/alex-virodov/dsa_common_isyntax
     # build: ../..
     # Instead of privileged mode, fuse can use:
     # devices:
@@ -91,7 +91,7 @@ services:
     command: /opt/digital_slide_archive/devops/dsa/start_girder.sh
     # command: tail -f /dev/null
   mongodb:
-    image: "mongo:latest"
+    image: "mongo:6.0.6"
     # Set DSA_USER to your user id (e.g., `DSA_USER=$(id -u):$(id -g)`)
     # so that database files are owned by yourself.
     user: ${DSA_USER:-PLEASE SET DSA_USER}
@@ -112,7 +112,7 @@ services:
         max-size: "10M"
         max-file: "5"
   memcached:
-    image: memcached
+    image: "memcached:1.6.20"
     command: -m 4096 --max-item-size 8M
     restart: unless-stopped
     # Uncomment to allow access to memcached from outside of the docker network
@@ -123,7 +123,7 @@ services:
         max-size: "10M"
         max-file: "5"
   rabbitmq:
-    image: "rabbitmq:latest"
+    image: "rabbitmq:3.10.23"
     restart: unless-stopped
     # Uncomment to allow access to rabbitmq from outside of the docker network
     # ports:
@@ -138,7 +138,7 @@ services:
         max-size: "10M"
         max-file: "5"
   worker:
-    image: ghcr.io/innovationcore/dsa_common_isyntax
+    image: ghcr.io/alex-virodov/dsa_common_isyntax
     # build: ../..
     # Set DSA_USER to a user id that is part of the docker group (e.g.,
     # `DSA_USER=$(id -u):$(id -g)`).  This provides permissions to manage
